@@ -1,0 +1,459 @@
+@charset "UTF-8";
+/*-- Basic Settings ----------------------------------------------------------*/
+* {
+  margin: 0;
+  padding: 0;
+  color: #000000; }
+
+body {
+  font-family: 'Source Sans Pro', "Sawarabi Gothic";
+  font-weight: 300; }
+
+#hexOutGrid {
+  margin: 0 auto;
+  overflow: hidden;
+  list-style-type: none; }
+
+#hexInGrid {
+  display: flex;
+  align-items: flex-end;
+  flex-wrap: wrap;
+  margin: 0; }
+
+/* Template Gridの非表示設定(JSで表示) */
+#colourGridTemplate {
+  display: none; }
+
+/* Colour GridのCode情報の非表示設定(JSでName/Code/Colourの表示切り替え) */
+.code {
+  display: none; }
+
+/* Gridの非表示設定(JSで表示) */
+.hexOut {
+  display: none; }
+
+/* Footerの非表示設定(JSでGridと合わせて表示) */
+footer {
+  display: none; }
+
+/*-- Position Settings -------------------------------------------------------*/
+.hexPosition {
+  position: relative;
+  visibility: hidden;
+  /*fix for jagged edges in FF on hover transition*/
+  outline: 1px solid transparent; }
+
+.hexPosition::after {
+  content: '';
+  display: block;
+  padding-bottom: 86.602%;
+  /* =  100 / tan(60) * 1.5 */ }
+
+/*-- Outer Hexagon -----------------------------------------------------------*/
+.hexOutDiamond {
+  position: absolute;
+  width: 93.75%;
+  padding-bottom: 108.252%;
+  /* =  width / sin(60) */
+  margin: 0 2%;
+  overflow: hidden;
+  visibility: hidden;
+  outline: 1px solid transparent;
+  -webkit-transform: rotate3d(0, 0, 1, -60deg) skewY(30deg);
+  -ms-transform: rotate3d(0, 0, 1, -60deg) skewY(30deg);
+  transform: rotate3d(0, 0, 1, -60deg) skewY(30deg); }
+
+.hexOutDiamond * {
+  position: absolute;
+  visibility: visible;
+  outline: 1px solid transparent; }
+
+.hexOutRectangle {
+  display: block;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  overflow: hidden;
+  -webkit-transform: skewY(-30deg) rotate3d(0, 0, 1, 60deg);
+  -ms-transform: skewY(-30deg) rotate3d(0, 0, 1, 60deg);
+  transform: skewY(-30deg) rotate3d(0, 0, 1, 60deg); }
+
+/*-- Inner Hexagon -----------------------------------------------------------*/
+.hexIn {
+  background-color: #FFFFFF; }
+
+.hexInDiamond {
+  width: 80%;
+  padding-bottom: 92.379%;
+  /* =  width / sin(60) */
+  margin: 11.1% 10% 11.1% 10%;
+  /*調整*/
+  overflow: hidden;
+  visibility: hidden;
+  outline: 1px solid transparent; }
+
+.hexInRectangle {
+  display: block;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  overflow: hidden;
+  -webkit-transform: skewY(-30deg) rotate3d(0, 0, 1, 60deg);
+  -ms-transform: skewY(-30deg) rotate3d(0, 0, 1, 60deg);
+  transform: skewY(-30deg) rotate3d(0, 0, 1, 60deg); }
+
+/*-- Grid Controll -------------------------------------------------------------
+  -- 6-5 hexagons per row ----------------------------------------------------*/
+@media (min-width: 1088px) {
+  /* header area width (width = 160*6) */
+  .tabs-menu {
+    width: 960px; }
+
+  /* grid area width including a title grid (width = 160*6+{160*(1.4-1)}*2) */
+  #hexOutGrid {
+    width: 1088px;
+    margin: auto;
+    padding: 64px 0 35px 0; }
+
+  /* grid area width excluding a title grid (width = 160*6) */
+  #hexInGrid {
+    width: 960px;
+    margin: auto; }
+
+  /* position settings for 1st grid of even rows (width(%) = 100(%)/6 grids) */
+  .hexPosition {
+    width: 16.667%; }
+
+  /* position settings for 1st grid of even rows (margin-left(%) = width(%)/2)*/
+  /* changed 11n+7 => 11n+8 to ignore template grid */
+  .hexPosition:nth-child(11n+8) {
+    margin-left: 8.3335%; }
+
+  /* title grid size (width = 16.667%*1.4(≒1.414))*/
+  #hexTitle {
+    width: 23.333%;
+    margin-top: -5.555%;
+    margin-left: -6.666%; } }
+/*-- Grid Controll -------------------------------------------------------------
+  -- 5-4 hexagons per row ----------------------------------------------------*/
+@media (max-width: 1087px) and (min-width: 928px) {
+  /* header area width (width = 160*5) */
+  .tabs-menu {
+    width: 800px; }
+
+  /* grid area width including a title grid (width = 160*5+{160*(1.4-1)}*2) */
+  #hexOutGrid {
+    width: 928px;
+    margin: auto;
+    padding: 64px 0 35px 0; }
+
+  /* grid area width excluding a title grid (width = 160*5) */
+  #hexInGrid {
+    width: 800px;
+    margin: auto; }
+
+  /* position settings for 1st grid of even rows (width(%) = 100(%)/5 grids) */
+  .hexPosition {
+    width: 20%; }
+
+  /* position settings for 1st grid of even rows (margin-left(%) = width(%)/2)*/
+  /* changed 9n+6 => 9n+7 to ignore template grid */
+  .hexPosition:nth-child(9n+7) {
+    margin-left: 10%; }
+
+  /* title grid size (width = 20%*1.4(≒1.414))*/
+  #hexTitle {
+    width: 28%;
+    margin-top: -6.667%;
+    margin-left: -8%; } }
+/*-- Grid Controll -------------------------------------------------------------
+  -- 4-3 hexagons per row ----------------------------------------------------*/
+@media (max-width: 927px) and (min-width: 768px) {
+  /* header area width (width = 160*4) */
+  .tabs-menu {
+    width: 640px; }
+
+  /* grid area width including a title grid (width = 160*4+{160*(1.4-1)}*2) */
+  #hexOutGrid {
+    width: 768px;
+    margin: auto;
+    padding: 64px 0 35px 0; }
+
+  /* grid area width excluding a title grid (width = 160*4) */
+  #hexInGrid {
+    width: 640px;
+    margin: auto; }
+
+  /* position settings for 1st grid of even rows (width(%) = 100(%)/4 grids) */
+  .hexPosition {
+    width: 25%; }
+
+  /* position settings for 1st grid of even rows (margin-left(%) = width(%)/2)*/
+  /* changed 7n+5 => 7n+6 to ignore template grid */
+  .hexPosition:nth-child(7n+6) {
+    margin-left: 12.5%; }
+
+  /* title grid size (width = 25%*1.4(≒1.414))*/
+  #hexTitle {
+    width: 35%;
+    margin-top: -8.333%;
+    margin-left: -10%; } }
+/*-- Grid Controll -------------------------------------------------------------
+  -- 4-3 hexagons per row (small title grid) ---------------------------------*/
+@media (max-width: 767px) and (min-width: 640px) {
+  /* header area width (width = 160*4) */
+  .tabs-menu {
+    width: 640px; }
+
+  /* grid area width including a title grid (width = 160*4) */
+  #hexOutGrid {
+    width: 640px;
+    margin: auto;
+    padding-bottom: 35px; }
+
+  /* grid area width excluding a title grid (width = the same as hexOutGrid) */
+  #hexInGrid {
+    width: 100%;
+    margin: auto; }
+
+  /* position settings for 1st grid of even rows (width(%) = 100(%)/4 grids) */
+  .hexPosition {
+    width: 25%; }
+
+  /* position settings for 1st grid of even rows (margin-left(%) = width(%)/2)*/
+  /* changed 7n+5 => 7n+6 to ignore template grid */
+  .hexPosition:nth-child(7n+6) {
+    margin-left: 12.5%; } }
+/*-- Grid Controll -------------------------------------------------------------
+  -- 4-3 hexagons per row (small title grid & responsive grid width ) --------*/
+@media (max-width: 639px) {
+  /* header area width (width = 100%) */
+  .tabs-menu {
+    width: 100%; }
+
+  /* grid area width including a title grid (width = 100%) */
+  #hexOutGrid {
+    width: 100%;
+    margin: auto;
+    padding-bottom: 5.46%;
+    /*35px/640px*/ }
+
+  /* grid area width excluding a title grid (width = the same as hexOutGrid) */
+  #hexInGrid {
+    width: 100%; }
+
+  /* position settings for 1st grid of even rows (width(%) = 100(%)/4 grids) */
+  .hexPosition {
+    width: 25%; }
+
+  /* position settings for 1st grid of even rows (margin-left(%) = width(%)/2)*/
+  /* changed 7n+5 => 7n+6 to ignore template grid */
+  .hexPosition:nth-child(7n+6) {
+    margin-left: 12.5%; } }
+/*-- Page Title Font Settings ------------------------------------------------*/
+/* display position(common) */
+h1 {
+  width: 100%; }
+
+.pageTitle1 {
+  display: block;
+  width: 100%;
+  margin-top: 20%; }
+
+.pageTitle2 {
+  display: block;
+  width: 100%;
+  margin-top: 31%; }
+
+.pageTitle3 {
+  display: block;
+  width: 100%;
+  margin-top: 53%; }
+
+.pageTitle4 {
+  display: block;
+  width: 100%;
+  margin-top: 58%; }
+
+/* font size for title grid (bigger size) */
+@media (min-width: 768px) {
+  .fontS {
+    font-size: 18px; }
+
+  .fontM {
+    font-size: 32px; }
+
+  .fontL {
+    font-size: 48px; } }
+/* font size for title grid (normal size) */
+@media (max-width: 767px) and (min-width: 640px) {
+  .fontS {
+    font-size: 12.857px; }
+
+  .fontM {
+    font-size: 22.857px; }
+
+  .fontL {
+    font-size: 34.285px; } }
+/* font size for title grid (smaller size) */
+@media (max-width: 639px) {
+  .fontS {
+    font-size: 2.012vw;
+    letter-spacing: -0.2012vw; }
+
+  .fontM {
+    font-size: 3.571vw;
+    letter-spacing: -0.3571vw; }
+
+  .fontL {
+    font-size: 5.357vw;
+    letter-spacing: -0.5357vw; } }
+/*-- Coulor Grid Font Settings -----------------------------------------------*/
+/* display position(common) */
+.nameJa {
+  width: 100%;
+  margin-top: 16%; }
+
+.nameJaLong {
+  width: 100%;
+  margin-top: 25%; }
+
+.nameEn {
+  width: 100%;
+  line-height: 105%; }
+
+.double {
+  margin-top: 40%; }
+
+.single {
+  margin-top: 50%; }
+
+.colourCode {
+  width: 100%;
+  margin-top: 83%; }
+
+.colourCodeRGB {
+  width: 100%;
+  margin-top: 26%; }
+
+.colourCodeCMYK {
+  width: 100%;
+  margin-top: 43%; }
+
+.colourCodeHSV {
+  width: 100%;
+  margin-top: 60%; }
+
+.colourCodeHex {
+  width: 100%;
+  margin-top: 77%; }
+
+/* font size for colour grid (normal size) */
+@media (min-width: 640px) {
+  .nameJa {
+    font-size: 20px;
+    -webkit-font-smoothing: antialiased; }
+
+  .nameJaLong {
+    font-size: 12px;
+    -webkit-font-smoothing: antialiased; }
+
+  .nameEn {
+    font-size: 24px;
+    -webkit-font-smoothing: antialiased; }
+
+  .colourCode {
+    font-size: 16px;
+    -webkit-font-smoothing: antialiased; }
+
+  .code {
+    font-size: 14px;
+    -webkit-font-smoothing: antialiased; } }
+/* font size for colour grid (smaller size) */
+@media (max-width: 639px) {
+  .nameJa {
+    font-size: 3.125vw;
+    letter-spacing: -0.3125vw;
+    -webkit-font-smoothing: antialiased; }
+
+  .nameJaLong {
+    font-size: 1.875vw;
+    letter-spacing: -0.375vw;
+    -webkit-font-smoothing: antialiased; }
+
+  .nameEn {
+    font-size: 3.75vw;
+    letter-spacing: -0.375vw;
+    -webkit-font-smoothing: antialiased; }
+
+  .colourCode {
+    font-size: 2.5vw;
+    -webkit-font-smoothing: antialiased; }
+
+  .code {
+    font-size: 2.1875vw;
+    -webkit-font-smoothing: antialiased; } }
+/*-- Header Settings ---------------------------------------------------------*/
+/* ulのデフォルトスタイルを消去 */
+.tabs-menu {
+  margin: 0 auto;
+  padding: 0;
+  list-style-type: none; }
+
+/* タブの基本スタイル */
+.tabs-menu li {
+  margin: 0 auto;
+  margin: 10px 0 -50px 0;
+  float: right;
+  border-style: solid;
+  border-width: 1px;
+  border-color: transparent;
+  border-radius: 4px 4px 0 0;
+  border-color: #f0f0f0 #f0f0f0;
+  /* 各プロパティをふわっと変える演出 */
+  transition: all .15s; }
+  @media (max-width: 767px) {
+    .tabs-menu li {
+      margin: 10px 0 13.5px 0; } }
+
+.tabs-menu a {
+  display: block;
+  text-decoration: none;
+  padding: 10px 20px; }
+  @media (max-width: 639px) {
+    .tabs-menu a {
+      padding: 5px 10px; } }
+
+li {
+  background-color: #91989F;
+  /* 銀鼠 */ }
+  li a {
+    color: #FFFFFF !important; }
+
+#active {
+  background-color: #FFFFFF; }
+  #active a {
+    color: #000000 !important; }
+
+/* 非選択のタブにマウスを乗せたら色を変える */
+.tabs-menu li:not(.active):hover {
+  background-color: #BDC0BA;
+  /* 白鼠 */ }
+
+/* 選択中のタブ */
+.tabs-menu .active {
+  border-color: #999 #999 transparent #999;
+  background-color: #fff; }
+
+.tabs-menu .active a {
+  color: #3F4548; }
+
+/*-- Footer Settings ---------------------------------------------------------*/
+.testLink {
+  display: none; }
+
+#copyright {
+  margin: 50px auto 10px auto;
+  text-align: center; }
+
+/*# sourceMappingURL=main.css.map */

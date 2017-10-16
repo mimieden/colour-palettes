@@ -1,0 +1,440 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+/*-- Basic Settings ----------------------------------------------------------*/
+body {
+  font-family: 'klee',YuGothic,'Yu Gothic','Hiragino Kaku Gothic ProN','ヒラギノ角ゴ ProN W3',sans-serif;
+}
+
+#hexOutGrid {
+  margin: 0 auto;
+  overflow: hidden;
+  list-style-type: none;
+}
+
+#hexInGrid {
+  display: flex;
+  flex-wrap: wrap;
+  margin: 0;
+}
+
+/*-- Position Settings -------------------------------------------------------*/
+.hexPosition {
+  position: relative;
+  visibility:hidden;
+  outline:1px solid transparent; /* fix for jagged edges in FF on hover transition */
+}
+
+.hexPosition::after{
+  content:'';
+  display:block;
+  padding-bottom: 86.602%;  /* =  100 / tan(60) * 1.5 */
+}
+
+/*-- Outer Hexagon -----------------------------------------------------------*/
+.hexOutDiamond{
+  position: absolute;
+  width:96%;                                                        /*template*/
+  width: 93.75%;                                                    /*original*/
+  padding-bottom: 110.851%; /* =  width / sin(60) */                /*template*/
+  padding-bottom: 108.252%; /* =  width / sin(60) */                /*original*/
+  margin:0 2%;
+  overflow: hidden;
+  visibility: hidden;
+  outline:1px solid transparent; /* fix for jagged edges in FF on hover transition */
+  -webkit-transform: rotate3d(0,0,1,-60deg) skewY(30deg);
+      -ms-transform: rotate3d(0,0,1,-60deg) skewY(30deg);
+          transform: rotate3d(0,0,1,-60deg) skewY(30deg);
+}
+
+.hexOutDiamond * {
+  position: absolute;
+  visibility: visible;
+  outline:1px solid transparent; /* fix for jagged edges in FF on hover transition */
+}
+
+.hexOutRectangle {
+    display:block;
+    width: 100%;
+    height: 100%;
+    text-align: center;
+    overflow: hidden;
+    -webkit-transform: skewY(-30deg) rotate3d(0,0,1,60deg);
+        -ms-transform: skewY(-30deg) rotate3d(0,0,1,60deg);
+            transform: skewY(-30deg) rotate3d(0,0,1,60deg);
+}
+
+/*-- Hover Effect ------------------------------------------------------------*/
+.hexOutRectangle:hover h2, .hexOutRectangle:focus h2,
+.hexOutRectangle:hover h3, .hexOutRectangle:focus h3{
+  -webkit-transform:translate3d(0,0,0);
+      -ms-transform:translate3d(0,0,0);
+          transform:translate3d(0,0,0);
+}
+
+/*-- Grid Controll -------------------------------------------------------------
+  -- Hexagon Siging and Even Row Indentation ---------------------------------*/
+  
+  
+/*ここで幅ごとの六角形の数を変えられる a個 or a-1個の場合
+  width = 100% / 六角形の個数
+  
+  .hex:nth-child(xn+y) => x = 2a-1, y = a+1
+  奇数列 = a個 => a+1個目が偶数列の最初 => y = a+1
+  その次の偶数列まで まるまる偶数列 a-1個 + 奇数列 a個分 => x = 2a-1
+  
+  このルールで好きな数に変えられる
+  
+  mini-widthごとに
+  大きなdivを設定して、divに1200pxとか1000pxとか指定してしまって
+  そのdivの中でhexのwidthを%指定したら伸縮しなくていいかな。
+  (width指定しないと大きく開いたときに計算がずれていってしまう。)
+*/  
+  
+  
+@media (min-width:1088px) { /* <- 6-5 hexagons per row */
+
+  .tabs-menu {
+    width: 960px;
+  }
+  
+  /*grid area width including title hexagon (width = 160*6 + {160*(1.4-1)}*2) */ 
+  #hexOutGrid{
+    width: 1088px;
+    margin: auto;
+    padding-top: 64px;
+    padding-bottom: 35px;    /*width * % = 66pxになるように最後に調整 */   
+  }
+  
+  /*grid area width for normal hexagons (width = 160*6) */
+  #hexInGrid {
+    width: 960px;
+    margin:auto;
+  }
+  
+  /*position settings*/
+  .hexPosition {
+    width: 16.667%; /* = 100 / 5 */
+  }
+  
+  .hexPosition:nth-child(11n+7){  /* first hexagon of even rows */
+    margin-left:8.3335%;          /* = width of .hex / 2  to indent even rows */
+  }
+  
+  .hexTitle {
+    width: 23.333%;
+    margin-top: -5.555%;
+    margin-left: -6.666%;
+  }  
+  
+}
+
+@media (max-width: 1087px) and (min-width: 928px) { /* <- 5-4 hexagons per row*/
+
+  .tabs-menu {
+    width: 800px;
+  }
+
+  /*grid area width including title hexagon (width = 160*5 + {160*(1.4-1)}*2) */ 
+  #hexOutGrid{
+    width: 928px;
+    margin: auto;
+    padding-bottom: 35px;    /*width * % = 66pxになるように最後に調整 */ 
+    padding-top: 64px;
+  }
+  
+  /*grid area width for normal hexagons  (width = 160*5) */
+  #hexInGrid {
+    width: 800px;
+    margin: auto;
+  }
+  
+  /*position settings*/
+  .hexPosition {
+    width: 20%; /* = 100 / 5 */
+  }
+  
+  .hexPosition:nth-child(9n+6){  /* first hexagon of even rows */
+    margin-left:10%;          /* = width of .hex / 2  to indent even rows */
+  }
+  
+  .hexTitle {
+    width: 28%;
+    margin-top: -6.667%;
+    margin-left: -8%;
+  }    
+}
+
+@media (max-width: 927px) and (min-width: 768px) { /* <- 4-3 hexagons per row*/
+
+/*ここの中でTitle Grid 切り替える */
+  .tabs-menu {
+    width: 640px;
+  }
+
+  /*grid area width including title hexagon (width = 160*4 + {160*(1.4-1)}*2) */ 
+  #hexOutGrid{
+    width: 768px;
+    margin: auto;
+    padding-bottom: 35px;    /*width * % = 66pxになるように最後に調整 */ 
+    padding-top: 64px;
+  }
+  
+  /*grid area width for normal hexagons  (width = 160*5) */
+  #hexInGrid {
+    width: 640px;
+    margin: auto;
+  }
+  
+  /*position settings*/
+  .hexPosition {
+    width: 25%; /* = 100 / 5 */
+  }
+  
+  .hexPosition:nth-child(7n+5){  /* first hexagon of even rows */
+    margin-left:12.5%;          /* = width of .hex / 2  to indent even rows */
+  }
+  
+  .hexTitle {
+    width: 35%;
+    margin-top: -8.333%;
+    margin-left: -10%;
+  }    
+}
+
+@media (max-width: 767px) and (min-width: 640px) { /* <- 4-3 hexagons per row*/
+
+/*ここの中でTitle Grid 切り替える */
+
+  .tabs-menu {
+    width: 640px;
+  }
+
+  /*grid area width including title hexagon (width = 160*4 + {160*(1.4-1)}*2) */ 
+  #hexOutGrid{
+    width: 640px;
+    margin: auto;
+    padding-bottom: 35px;    /*width * % = 66pxになるように最後に調整 */ 
+  }
+  
+  /*grid area width for normal hexagons  (width = 160*5) */
+  #hexInGrid {
+    width: 100%;
+    margin: auto;
+  }
+  
+  /*position settings*/
+  .hexPosition {
+    width: 25%; /* = 100 / 5 */
+  }
+  .hexPosition:nth-child(7n+5){  /* first hexagon of even rows */
+    margin-left:12.5%;          /* = width of .hex / 2  to indent even rows */
+  }
+}
+
+@media (max-width: 639px){ /* <- 4-3 hexagons per row*/
+  
+  .tabs-menu {
+    width: 100%;
+  }
+
+  /*grid area width including title hexagon (width = 160*4 + {160*(1.4-1)}*2) */ 
+  #hexOutGrid{
+    width: 100%;
+    margin: auto;
+    padding-bottom: 5.46%;    /*width * % = 66pxになるように最後に調整 */ 
+  }
+  
+  /*grid area width for normal hexagons  (width = 160*5) */
+  #hexInGrid {
+    width: 100%;
+  }
+  
+  /*position settings*/
+  .hexPosition {
+    width: 25%; /* = 100 / 5 */
+  }
+  .hexPosition:nth-child(7n+5){  /* first hexagon of even rows */
+    margin-left:12.5%;          /* = width of .hex / 2  to indent even rows */
+  }
+}
+
+
+/*-- Page Title Font Settings ------------------------------------------------*/
+
+@media (min-width: 768px) {
+  .font18 {
+    font-size: 18px;
+  }
+
+  .font32 {
+    font-size: 32px;
+  }
+
+  .font48 {
+    font-size: 48px;
+  }
+
+  .pageTitle1 {
+    width: 100%;
+    margin-top: 19%;
+  }
+
+  .pageTitle2 {
+    width: 100%;
+    margin-top: 30%;
+  }
+
+  .pageTitle3 {
+    width: 100%;
+    margin-top: 53%;
+  }
+
+  .pageTitle4 {
+    width: 100%;
+    margin-top: 55%;
+  }
+
+}
+
+@media (max-width: 767px) and (min-width: 640px) {
+  .font18 {
+    font-size: 13px;
+  }
+
+  .font32 {
+    font-size: 23px;
+  }
+
+  .font48 {
+    font-size: 34px;
+  }
+
+  .pageTitle1 {
+    width: 100%;
+    margin-top: 19%;
+  }
+
+  .pageTitle2 {
+    width: 100%;
+    margin-top: 30%;
+  }
+
+  .pageTitle3 {
+    width: 100%;
+    margin-top: 53%;
+  }
+
+  .pageTitle4 {
+    width: 100%;
+    margin-top: 55%;
+  }  
+  
+}
+
+@media (max-width: 639px) {
+  .font18 {
+    font-size: 2.06vw;
+  }
+
+  .font32 {
+    font-size: 3.67vw;
+  }
+
+  .font48 {
+    font-size: 5.5vw;
+  }
+
+  .pageTitle1 {
+    width: 100%;
+    margin-top: 19%;
+  }
+
+  .pageTitle2 {
+    width: 100%;
+    margin-top: 31%;
+  }
+
+  .pageTitle3 {
+    width: 100%;
+    margin-top: 53%;
+  }
+
+  .pageTitle4 {
+    width: 100%;
+    margin-top: 55%;
+  }    
+}
+
+
+/*-- Coulor Grid Font Settings -----------------------------------------------*/
+@media (min-width: 640px) {
+  h1 {
+    width: 100%;
+    color: black;
+  }
+
+  .nameJa {
+    font-size:20px;
+    width: 100%;
+    margin-top: 16%;
+  }
+
+  .nameEn {
+    font-size:24px;
+    width: 100%;
+    line-height: 105%;
+  }
+
+  .double{
+    font-weight: 100;
+    margin-top: 40%;
+  }
+
+  .single{
+    font-weight: 100;
+    margin-top: 50%;
+  }
+
+  .colourCode {
+    font-size:16px;
+    width: 100%;
+    margin-top: 83%;
+  }
+}
+
+@media (max-width: 639px) {
+  h1 {
+    width: 100%;
+    color: black;
+  }
+  .nameJa {
+    font-size:3.125vw;
+    width: 100%;
+    margin-top: 16%;
+  }
+
+  .nameEn {
+    font-size:3.75vw;
+    width: 100%;
+    line-height: 105%;
+  }
+
+  .double{
+    font-weight: 100;
+    margin-top: 40%;
+  }
+
+  .single{
+    font-weight: 100;
+    margin-top: 50%;
+  }
+
+  .colourCode {
+    font-size:2.5vw;
+    width: 100%;
+    margin-top: 83%;
+  }
+}

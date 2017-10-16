@@ -1,0 +1,22 @@
+[
+  {"id":1,"nameJa":"ベビーピンク","nameEn":"baby pink","colourCode":"#FFC6D6"},
+  {"id":2,"nameJa":"シェルピンク","nameEn":"shell Pink","colourCode":"#FFBDB3"},
+  {"id":3,"nameJa":"フレッシュピンク","nameEn":"flesh pink","colourCode":"#F2D5CC"},
+  {"id":4,"nameJa":"パステルピンク","nameEn":"pastel pink","colourCode":"#FC9DB8"},
+  {"id":5,"nameJa":"カナリー","nameEn":"canary","colourCode":"#FFD718"},
+  {"id":6,"nameJa":"バナナ","nameEn":"banana","colourCode":"#F5D300"},
+  {"id":7,"nameJa":"レモンイエロー","nameEn":"lemon</br>yellow","colourCode":"#FEC300"},
+  {"id":8,"nameJa":"マスタード","nameEn":"mustard","colourCode":"#E3AB0D"},
+  {"id":9,"nameJa":"シュヴァインフルト","nameEn":"schweinfurt","colourCode":"#00AE42"},
+  {"id":10,"nameJa":"ミント","nameEn":"mint","colourCode":"#006252"},
+  {"id":11,"nameJa":"クロームグリーン","nameEn":"chrome</br>green","colourCode":"#00885F"},
+  {"id":12,"nameJa":"マラカイトグリーン","nameEn":"malachite</br>green","colourCode":"#347655"},
+  {"id":13,"nameJa":"フォゲットミーノット","nameEn":"forget me</br>not","colourCode":"#66B7D8"},
+  {"id":14,"nameJa":"パウダーブルー","nameEn":"powder</br>blue","colourCode":"#E6F6FC"},
+  {"id":15,"nameJa":"ピーコック","nameEn":"Peacock","colourCode":"#00586D"},
+  {"id":16,"nameJa":"エジプシアンブルー","nameEn":"egyptian</br>blue","colourCode":"#006785"},
+  {"id":17,"nameJa":"ラべンダー","nameEn":"lavender","colourCode":"#AB85B2"},
+  {"id":18,"nameJa":"ウィスタリア","nameEn":"wisteria","colourCode":"#7B639C"},
+  {"id":19,"nameJa":"ライラック","nameEn":"lilac","colourCode":"#D191B4"},
+  {"id":20,"nameJa":"マロウ","nameEn":"mallow","colourCode":"#C6639E"}
+]

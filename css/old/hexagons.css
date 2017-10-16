@@ -21,6 +21,15 @@ body {
   visibility:hidden;
   outline:1px solid transparent; /* fix for jagged edges in FF on hover transition */
 }
+
+.col1 {
+  background-color: #F8C3Cd;
+}
+
+.colWhite {
+  background-color: #FFF;
+}
+
 .hex::after{
   content:'';
   display:block;
@@ -38,6 +47,25 @@ body {
       -ms-transform: rotate3d(0,0,1,-60deg) skewY(30deg);
           transform: rotate3d(0,0,1,-60deg) skewY(30deg);
 }
+
+/*内側の白いdivの設定
+  width:いったん80%
+  badding-bottomはtemplateの計算式の通り
+  marginは(100% - 80%) / 2 で設定したが少しずれるので微調整
+  デベロッパツールでいい感じにあうところに設定
+  position absoluteはいらない？
+  ここでもrotateかけると周りすぎるのでいらない
+*/
+.hexInMini{
+  width:80%;
+  padding-bottom: 92.379%; /* =  width / sin(60) "0.866" */
+  margin:11.1% 10% 11.1% 10%;
+  overflow: hidden;
+  visibility: hidden;
+  outline:1px solid transparent; /* fix for jagged edges in FF on hover transition */
+  color: #000;
+}
+
 .hexIn * {
   position: absolute;
   visibility: visible;
@@ -54,6 +82,7 @@ body {
         -ms-transform: skewY(-30deg) rotate3d(0,0,1,60deg);
             transform: skewY(-30deg) rotate3d(0,0,1,60deg);
 }
+
 
 /*** HEX CONTENT **********************************************************************/
 .hex img {
@@ -112,16 +141,37 @@ body {
 }
 
 /*** HEXAGON SIZING AND EVEN ROW INDENTATION *****************************************************************/
+
+/*内側の白いdivの設定
+  ここで幅ごとの六角形の数を変えられる a個 or a-1個の場合
+  width = 100% / 六角形の個数
+  
+  .hex:nth-child(xn+y) => x = 2a-1, y = a+1
+  奇数列 = a個 => a+1個目が偶数列の最初 => y = a+1
+  その次の偶数列まで まるまる偶数列 a-1個 + 奇数列 a個分 => x = 2a-1
+  
+  このルールで好きな数に変えられる
+  
+  mini-widthごとに
+  大きなdivを設定して、divに1200pxとか1000pxとか指定してしまって
+  そのdivの中でhexのwidthを%指定したら伸縮しなくていいかな。
+  (width指定しないと大きく開いたときに計算がずれていってしまう。)
+*/
+
+
 @media (min-width:1201px) { /* <- 5-4  hexagons per row */
   #hexGrid{
     padding-bottom: 4.4%
   }
   .hex {
     width: 20%; /* = 100 / 5 */
+    /*width: 240px; */
   }
   .hex:nth-child(9n+6){ /* first hexagon of even rows */
     margin-left:10%;  /* = width of .hex / 2  to indent even rows */
+    /*margin-left:120px;*/
   }
+  
 }
 
 @media (max-width: 1200px) and (min-width:901px) { /* <- 4-3  hexagons per row */
